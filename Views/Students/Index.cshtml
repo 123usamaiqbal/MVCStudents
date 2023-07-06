@@ -1,0 +1,108 @@
+﻿@model IEnumerable<MVCStudents.Models.Students>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Students Index</h1>
+
+<p>
+    <!--<input type="submit" asp-action="Create" value="Create New" class="btn btn-primary" />-->
+    <!--<a href="Create" class="btn btn-primary">Create New</a>-->
+    <a asp-action="Create" class="btn btn-primary">Create New</a>
+</p>
+<table class="table" id="dataTabledata">
+    <thead>
+        <tr style="background-color: floralwhite">
+            <!--<th>-->
+            @*@Html.DisplayNameFor(model => model.Id)*@
+            <!--</th>-->
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Fname)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DOB)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) 
+{
+        <tr>
+                <!--<td hidden>-->
+                @*@Html.DisplayFor(modelItem => item.Id)*@
+                <!--</td>-->
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fname)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DOB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-dark">Edit</a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-outline-danger">Delete</a>
+                    <a asp-action="Gradingcreate" class="btn btn-primary">Create Grading</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@*@section scripts{*@
+@*<script src="~/js/datatable_file.js"></script>*@
+@*}*@
+@section scripts {
+    <link href="https://cdn.datatables.net/1.11.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.11.1/js/jquery.dataTables.min.js"></script>
+    <script src="~/js/datatable_file.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myDataTable').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: {
+                    url: '@Url.Action("LoadData", "My")',
+                    type: 'POST',
+                    contentType: 'application/json',
+                    data: function (d) {
+                        // Convert DataTables request parameters to match your server-side model
+                        d.columns = d.columns.map(function (column) {
+                            return {
+                                Data: column.data,
+                                Name: column.name,
+                                Searchable: column.searchable,
+                                Orderable: column.orderable,
+                                Search: {
+                                    Value: column.search.value,
+                                    Regex: column.search.regex
+                                }
+                            };
+                        });
+                        return JSON.stringify(d);
+                    }
+                },
+                Columns: [
+                    { data: 'Name' },
+                    { data: 'Fname' },
+                    { data: 'DOB' },
+                    { data: 'Email' },// Assuming you have a property named 'name' in MyDataModel
+                    // Add other columns as needed
+                ]
+            });
+        });
+    </script>
+}

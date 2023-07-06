@@ -1,0 +1,53 @@
+﻿@model MVCStudents.Models.Grading
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Grading</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Computer" class="control-label"></label>
+                <input asp-for="Computer" class="form-control" />
+                <span asp-validation-for="Computer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Physics" class="control-label"></label>
+                <input asp-for="Physics" class="form-control" />
+                <span asp-validation-for="Physics" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Science" class="control-label"></label>
+                <input asp-for="Science" class="form-control" />
+                <span asp-validation-for="Science" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="GradingId" class="control-label"></label>
+                <input asp-for="GradingId" class="form-control" />
+                <span asp-validation-for="GradingId" class="text-danger"></span>
+            </div>
+            <div>
+             <h6>   </h6>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-info">Back to Gradings</a>
+                <a asp-action="StdIndex" class="btn btn-info">Back to Students</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+   
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
